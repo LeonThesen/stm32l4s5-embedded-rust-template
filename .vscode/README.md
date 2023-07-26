@@ -1,7 +1,7 @@
 # VS Code Configuration
 
-Example configurations for debugging programs in-editor with VS Code.  
-This directory contains configurations for this platform:
+Configuration for debugging programs in-editor with VS Code.  
+This directory contains the configuration for the following platform:
 
  - `STM32L4S5x` via OpenOCD
 
