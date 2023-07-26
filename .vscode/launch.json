@@ -1,0 +1,38 @@
+{
+    /* 
+     * Requires the Rust Language Server (rust-analyzer) and Cortex-Debug extensions
+     * https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer
+     * https://marketplace.visualstudio.com/items?itemName=marus25.cortex-debug
+     */
+    "version": "0.2.0",
+    "configurations": [
+        {
+            /* Configuration for the STM32L4S5 Discovery kit */
+            "type": "cortex-debug",
+            "request": "launch",
+            "name": "Debug (OpenOCD)", /* Change this if you have multiple OpenOCD configurations. */
+            "servertype": "openocd",
+            "cwd": "${workspaceRoot}",
+            "preLaunchTask": "Cargo Build (debug)",
+            "runToEntryPoint": "main", /* Change only if your main function is not called 'main' */
+            "executable": "./target/thumbv7em-none-eabihf/debug/template", /* Change this to your executable path */
+            "cpu": "cortex-m4", /* Change this to your Arm CPU architecture. */
+            "device": "STM32L4S5VIT6", /* Change this to the name of your device. */
+            "configFiles": [
+                "interface/stlink.cfg", /* Change this to the corresponding config file of your STLINK configuration. */
+                "target/stm32l4x.cfg" /* Change this to the corresponding config file of your microcontroller. */
+            ],
+            "svdFile": "${workspaceRoot}/.vscode/STM32L4S5.svd", /* Change this to the path of the downloaded .svd file. */
+            "swoConfig": {
+                "enabled": true,
+                "cpuFrequency": 120000000, /* Change CPU frequency according to the datasheet. */
+                "swoFrequency": 2000000,
+                "source": "probe",
+                "decoders": [
+                    { "type": "console", "label": "ITM", "port": 0 }
+                ]
+            },
+            "postLaunchCommands": ["monitor arm semihosting enable"] /* Remove this when panic_semihosting is not used! */
+        }
+    ]
+}
